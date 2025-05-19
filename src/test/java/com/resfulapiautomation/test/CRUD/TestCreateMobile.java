@@ -7,22 +7,25 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.restassured.RestAssured;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 public class TestCreateMobile extends BaseTest {
     @Owner("Rahul")
     @Description("TC1# - Setp 1. Verify that Mobile can be created")
     @Test(groups = "qa" , priority = 1)
-    public void testCreateMobile(){
+    public void testCreateMobile(ITestContext iTestContext){
         // Setup and Making a Request.
         requestSpecification.basePath(APIConstants.CREATE_UPDATE_OBJECTS_URL);
-        response = RestAssured.given(requestSpecification).when().body(payloadManager.createPayloadObjectAsString()).log().all();
+        response = RestAssured.given(requestSpecification).when().body(payloadManager.createPayloadObjectAsString()).log().all().post();
 
         // Extraction
         ResponseMobile responseMobile = payloadManager.mobileResponseJava(response.asString());
 
         // Verification Part
         assertActions.verifyStringKeyNotNull(responseMobile.getId());
-       // assertActions.verifyStringKey(responseMobile.getId().getFirstname(),"Pramod");
+        System.out.println(responseMobile.getId());
+        iTestContext.setAttribute("getId", responseMobile.getId());
+
     }
 }

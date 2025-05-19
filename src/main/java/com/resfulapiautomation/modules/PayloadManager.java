@@ -34,4 +34,26 @@ public class PayloadManager {
         return responseMobile;
     }
 
+    // Serialization
+    public String fullUpadtePayloadAsString(){
+        Mobile mobile = new Mobile();
+        mobile.setName("iQOO CE4");
+        Data data = new Data();
+        data.setYear(2024);
+        data.setPrice(20000.99);
+        data.setCPUModel("SnapDragon");
+        data.setHardDiskSize("128 GB");
+        mobile.setData(data);
+        // Java Object -> JSON
+        gson = new Gson();
+        String jsonStringobject = gson.toJson(mobile);
+        return jsonStringobject;
+    }
+    //DeSerialization
+    public Mobile getResponseFromJSON(String getResponse){
+        gson = new Gson();
+        Mobile mobile = gson.fromJson(getResponse, Mobile.class);
+        return mobile;
+    }
+
 }
